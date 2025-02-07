@@ -55,7 +55,7 @@ def main():
     wait()
     current_x, current_y = 8.5, 15  # Reset tracked position
 
-    while (tries <= 5):
+    while (tries <= 10):
             # Generate a random coordinate within limits
             new_x = random.randint(X_MIN, X_MAX)
             new_y = random.randint(Y_MIN, Y_MAX)
@@ -65,13 +65,22 @@ def main():
             wait()
             current_x = new_x
             current_y = new_y
-            time.sleep(1.5)
+            time.sleep(2)
 
             # Return to home position
             send_smooth_motion(100, 100, max_speed=15000, max_accel=12500)
             wait()
-            time.sleep(2)
+            time.sleep(1)
             tries = tries + 1
 
+    home = input("Press enter to go to home: ")
+    send_smooth_motion(0, 0, max_speed=15000, max_accel=12500)
+    wait()
+    current_x, current_y = 0, 0    
+
 if __name__ == "__main__":
-    main()
+    while True:
+        main()
+        repeat = int(input("Press 1 to repeat: "))
+        if(repeat != 1):
+            break
